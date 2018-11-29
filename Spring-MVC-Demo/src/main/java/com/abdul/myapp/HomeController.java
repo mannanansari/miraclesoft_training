@@ -1,6 +1,7 @@
 package com.abdul.myapp;
 
 import java.text.DateFormat;
+
 import java.util.Date;
 import java.util.Locale;
 
@@ -8,8 +9,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.validation.annotation.Validated;
 
 /**
  * Handles requests for the application home page.
@@ -35,5 +38,23 @@ public class HomeController {
 		
 		return "home";
 	}
+	@RequestMapping(value="/form", method=RequestMethod.GET)
+	public String formFieldsPage(@ModelAttribute("abdul") Employee e) {
+		return "form";
+	}
 	
+	@RequestMapping(value="/home", method=RequestMethod.POST)
+	public String formFields(@ModelAttribute("abdul") Employee e, Model model) {
+		model.addAttribute("e1", e.getEmpid());
+		model.addAttribute("e2", e.getEmpname());
+		model.addAttribute("e3", e.getEmpsalary());
+		model.addAttribute("e4", e.getEmplocation());
+		
+		//System.out.println("Emp Id="+e.getEmpid());
+		//System.out.println("Emp Name="+e.getEmpname());
+		//System.out.println("Emp Salary="+e.getEmpsalary());
+		//System.out.println("Emp Location="+e.getEmplocation());
+		
+		return "print";
+	}
 }
